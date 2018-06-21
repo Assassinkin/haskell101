@@ -37,6 +37,7 @@ Run the haskell interpreter and load the programm
 *Main> play 1 0 'O' it
 ["XOX","OXO","X.O"]
 *Main> bestMove it
-["XOX","OXO","XXO"]```
+["XOX","OXO","XXO"]
+```
 
 TODO: Refactor it into a program with a main.
