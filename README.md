@@ -3,7 +3,7 @@ My notes while learning Haskell
 
 ---
 
-### Version: 0.0.1
+### Version: 0.0.3
 ***
 
 * This repo contains some resources i found interesting to start with learning Haskell
