@@ -11,7 +11,6 @@ My notes while learning Haskell
 * 3 illustrative games examples:
   - Hangman
   - Tictac [WIP]
-  - Poker [WIP]
 
 ---
 
@@ -19,7 +18,4 @@ My notes while learning Haskell
 Run the program using : `runhaskell hangman.hs`
 
 ### play Tictac
-WIP
-
-### Play Poker 
 WIP
