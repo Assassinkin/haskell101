@@ -90,11 +90,11 @@ best way for this to work is using a list of 2-tuple:
 
 ### Algebraic Data Types
 
-To be done ... 
+To be done ...
 
-###
+# again  
 
-to foce haskell to treat a var in a certain way use: 
+to foce haskell to treat a var in a certain way use:
 (123 :: Float) then 123 will be considered float
 
 
@@ -109,3 +109,41 @@ use :help for the full list
 A list is an empty list "[]" or a variable appended to another list
 1: [2] outputs [1, 2]
 
+### dealing with main functions:
+main function is of the type input output and it does not return a value
+
+we can compile the program using `stack ghi main.hs` and it will output a binary file
+the output file would be large aroud 10 mB which is not ok for a hello world module this is due ghi linking all thje module used by haskell
+to prevent that we can use `stack ghi -- -dynamic test.hs`
+
+### Intro to function (again :p)
+add a b = a + b is similar to add a b = (+) a b cause (+) is a function in itself
+
+### Data Structure
+
+Type synonym are usefull forreadability but they don't provide any extra power
+
+""""Algebri cdata types  (like Bool)
+can be declared as follow
+`data Compass = North | East | South | West`
+
+Typing North in ghci triggers an error not a syntax error but an error related top the fact that the data type has no instance (a function) that allows it to be displayed in the compiler
+
+we fix that :
+```
+instance Show Compass where
+  show North = "North"
+  show South = "south"
+  show East = "East"
+  show North = "West"
+```
+Etc for all the other relevant instances for your data such as Eq ...
+This is no wonder a tedious process. Fortunatly that can be fixed with "deriving" as follow
+
+```
+data Compass = North | East | South | West
+  deriving (Eq, Ord, Enum, Show)
+```
+
+These variables are sum types we also have product types that refer to tyeps where constructures takes additional parameters: like the maybe type:
+`data Maybe a = Nothing | Just a `
