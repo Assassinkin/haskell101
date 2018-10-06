@@ -147,3 +147,37 @@ data Compass = North | East | South | West
 
 These variables are sum types we also have product types that refer to tyeps where constructures takes additional parameters: like the maybe type:
 `data Maybe a = Nothing | Just a `
+
+
+### pattern matching
+To manipulate lists we usually use head and tail: head will return the first element and tail will return the list except the first element
+
+Lets see how to create ower own functions
+
+```
+newHead :: [a] -> a
+newHead [] = error "empty list"
+newHead (x:xs) = x
+
+newTail :: [a] -> [a]
+newTail [] = error "empty list"
+newTail (x:xs) = xs
+```
+
+## Words "Project"  (https://github.com/Assassinkin/...)
+
+To create a project with stack run:
+`stack new words new-template -p "author-email:iuns@outlook.fr" -p "author-name:KaliAWSfatE" -p "category:dev" -p "copyright:BSD" -p "github-username:assassinKin"`
+To compile it use : `cd words; stack ghci`
+
+To create a module: use the `module` keyword then the name of the variable `Lib` in this case. then a list of the exported functions in `(someFunc)` and finally the `where` keyword to define the functions and symbols.
+
+To build the project run `stack build` then run `stack exec words-exe` to execute the binary
+we can change the project metadata, executable name, ... in the words.cabal file
+we can add -dynamic in the `ghc-options` in the words.cabal file to make sure the binary size is reasonable
+to run tests: stack test
+
+when importing modules we need to specify that in the words.cabal file: add it to the `build-depends` section
+If the module is needed for testing make sure to import it under `build-depends` for `test-suite`
+
+in the test file: `$` in `main = hspec $ do` is a syntaxic sugar that replaces ()
