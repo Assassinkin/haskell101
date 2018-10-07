@@ -208,6 +208,20 @@ To compile it use : `cd words; stack ghci`
 
 To create a module: use the `module` keyword then the name of the variable `Lib` in this case. then a list of the exported functions in `(someFunc)` and finally the `where` keyword to define the functions and symbols.
 
+here is an example:
+```
+module Lib
+    ( someFunc
+    , someString
+    ) where
+
+someFunc :: IO ()
+someFunc = putStrLn someString
+
+someString :: String
+someString = "someString"
+```
+
 To build the project run `stack build` then run `stack exec words-exe` to execute the binary
 we can change the project metadata, executable name, ... in the words.cabal file
 we can add -dynamic in the `ghc-options` in the words.cabal file to make sure the binary size is reasonable
@@ -217,3 +231,8 @@ when importing modules we need to specify that in the words.cabal file: add it t
 If the module is needed for testing make sure to import it under `build-depends` for `test-suite`
 
 in the test file: `$` in `main = hspec $ do` is a syntaxic sugar that replaces ()
+
+Hoogle is a usefull haskell api search engine
+
+if we need a function that have a specifuc type def we can search for it via hoogle
+we need just to type [String] -> String
