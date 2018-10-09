@@ -236,3 +236,33 @@ Hoogle is a usefull haskell api search engine
 
 if we need a function that have a specifuc type def we can search for it via hoogle
 we need just to type [String] -> String
+
+we can access a position i a list via `[1 ..] !! 50`
+we can get a list of the 10 first value in a list via `take 10 [1 ..]`
+also this is usefull: `takeWhile (10) [0 ..]`
+
+**Monad**
+
+List Monad notation
+```mapped = do
+  i <- [0 ..]
+  return (i * 2)
+```
+-> return a list of [0 2 4 ..]
+```filtered = do
+   i <- [0 ..]
+   guard (div2 i)
+   return i
+```
+look into guard more
+--> return a list of [ 0 2 4 ..]
+we can combine mapping and filtering together as follow
+```
+pammedAndFiltered = do
+  i <- [0 ..]
+  guard (div2 i)
+  return (i + 1)
+```
+--> return [ 1 3 5 ..]
+we can also do that as follow :
+` [ i * 2 | i <- [0..9], div2 i]` notice the guard expression after the ','
