@@ -1,4 +1,0 @@
-Haskell Tutorial:      https://www.youtube.com/watch?v=02_H3LjqMr8&t=26s
-Cheat Sheet:           http://www.newthinktank.com/2015/08/learn-haskell-one-video/
-Best Free Haskell Book http://learnyouahaskell.com/chapters
-Learn You a Haskell    https://www.youtube.com/playlist?list=PLS6urCrsYES24Fwzg5-Uga1QEbNm9kiU_

@@ -7,9 +7,6 @@
 -- Haskell is lazy in that it doesn't execute more then is needed and instead
 -- just checks for errors
 
--- Best Free Haskell Book
--- http://learnyouahaskell.com/chapters
-
 -- Type ghci to open it up in your terminal
 -- Load script with :l haskelltut
 -- :quit exits the GHCi

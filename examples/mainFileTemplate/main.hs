@@ -6,9 +6,6 @@ main = putStrLn (greet "World")
 greeting = "Hello"
 greet who = greeting ++ ", " ++ who
 
-
 add Int -> Int -> Int
-
 add = (+)
-
 -- even though (+) can add floating number and stuff add can't cause we restricted its type to Int
