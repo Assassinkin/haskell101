@@ -1,4 +1,4 @@
-# [Words](https://github.com/Assassinkin/wordsGridGame) "Project" notes 
+# [Words](https://github.com/Assassinkin/wordsGridGame) "Project" notes
 
 `stack setup`: run from outside a project using implicit global config.
 
@@ -50,9 +50,3 @@ In the test file: `$` in `main = hspec $ do` is a syntaxic sugar that replaces (
 Hoogle is a usefull haskell api search engine.
 
 If we need a function that have a specific type def we can search for it via [hoogle](https://www.haskell.org/hoogle/) .We need just to type `[String] -> String`.
-
-we can access a position i a list via `[1 ..] !! 50`.
-
-we can get a list of the 10 first value in a list via `take 10 [1 ..]`.
-
-also this is usefull: `takeWhile (10) [0 ..]`.
