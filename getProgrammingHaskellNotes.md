@@ -99,3 +99,11 @@ The `filter` function behave similarly to `map` but works by keeping only the el
 The function `foldl` (the l stands for left, which we’ll explain soon) takes a list and reduces it to a single value. The function takes three arguments: a binary function, an initial value, and a list. The most common use of foldl is to sum a list
 
 `foldl` and `map` can be used together in a great way  such as the sum or squares: `sumOfSquares x = foldl (+) 0 (map (^2) x)`
+
+The alterative to `foldl` is `foldr` The reason we call it a right fold is that there are two arguments in a binary function: a left argument and a right argument. The left fold compacts the list into the left argument, and the right fold into the right argument.
+
+- `foldl` is the most intuitive behaving of the folds, but it usually has terrible performance
+and can’t be used on infinite lists.
+- `foldl'` is a nonlazy version of foldl that’s often much more efficient.
+- `foldr` is often more efficient than foldl and is the only fold that works on infinite
+lists.
