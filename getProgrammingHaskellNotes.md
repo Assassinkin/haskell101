@@ -107,3 +107,57 @@ and can’t be used on infinite lists.
 - `foldl'` is a nonlazy version of foldl that’s often much more efficient.
 - `foldr` is often more efficient than foldl and is the only fold that works on infinite
 lists.
+
+## Functional OOP
+
+The common approach of calling methods. When calling methods, your object > action: `car.start()` (car is the object, and start is the action). functional approach will invert this pattern by sending a message to an object: `start car`
+
+#### build fighting robots!
+
+The object modeling the robot will have some basic properties:
+- A name
+- An attack strength
+- A number of hit points
+
+A robot constructor: `robot (name,attack,hp) = \message -> message (name,attack,hp)`
+
+Create an instance of your robot like this: `nagatoPain = robot ("Pain",25,200)`
+
+To make this object useful, you’ll have to add a few accessors so you can work with these values more easily.
+
+name, attack, and hp helper functions:
+```haskell
+name (n,_,_) = n
+attack (_,a,_) = a
+hp (_,_,hp) = hp
+```
+
+With these helper functions, we can easily implement getters.
+```haskell
+getName aRobot = aRobot name
+getAttack aRobot = aRobot attack
+getHP aRobot = aRobot hp
+```
+
+Setters will allow to set the properties. Each of these cases will have to return a new
+instances of the robot.
+
+setName, setAttack, and setHP accessors:
+```haskell
+setName aRobot newName = aRobot (\(n,a,h) -> robot (newName,a,h))
+setAttack aRobot newAttack = aRobot (\(n,a,h) -> robot (n,newAttack,h))
+setHP aRobot newHP = aRobot (\(n,a,h) -> robot (n,a,newHP))
+```
+
+setters work as follow by basically creating a new robot in our case which we do clone after the basic one:
+`nicerRobot = setName killerRobot "kitty"`
+
+Defining a printRobot message:
+```haskell
+printRobot aRobot = aRobot (\(n,a,h) -> n ++
+" attack:" ++ (show a) ++
+" hp:"++ (show h))
+```
+then we can run it like this: `printRobot killerRobot`
+
+Haskell isn’t an object-oriented language. All of the functionality built here from scratch already exists in a much more powerful form, using Haskell’s type system.  Haskell’s types can replicate all the behavior  needed for OOP.
