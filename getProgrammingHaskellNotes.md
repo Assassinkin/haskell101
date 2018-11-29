@@ -179,6 +179,6 @@ Haskell is a statically typed programming language. Haskell make use of type inf
 
 -> It’s Haskell’s type system that sets it apart from other programming languages.  
 
-                    Variable name :: Variable type
-Type signature:      `something :: Int`
-Variable definition: `something = 20`
+                                      Variable name :: Variable type
+                    Type signature:      `something :: Int`
+                    Variable definition: `something = 20`
