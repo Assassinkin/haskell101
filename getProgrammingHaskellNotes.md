@@ -161,3 +161,24 @@ printRobot aRobot = aRobot (\(n,a,h) -> n ++
 then we can run it like this: `printRobot killerRobot`
 
 Haskell isn’t an object-oriented language. All of the functionality built here from scratch already exists in a much more powerful form, using Haskell’s type system.  Haskell’s types can replicate all the behavior  needed for OOP.
+
+
+# Types
+
+Python, and JavaScript languages uses `dynamic typing`, decision concerning variables are taken during runtime.
+
+- dynamic typing (+): more flexibility, no need to keep track of types
+- dynamic typing (-):  errors happen only at runtime.
+
+`static typing` used by languages such as C C++ and Java
+
+- static typing (+): types issues occurs during compile time
+- static typing (-): Add many annotation for types for each variable and function.
+
+Haskell is a statically typed programming language. Haskell make use of type inference as it can helpfigure the type of a variable on its own.
+
+-> It’s Haskell’s type system that sets it apart from other programming languages.  
+
+                    Variable name :: Variable type
+Type signature:      `something :: Int`
+Variable definition: `something = 20`
