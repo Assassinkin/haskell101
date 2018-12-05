@@ -4,8 +4,7 @@ Closures are the logical consequence of having lambda functions and first-class 
 By combining these lambda functions and first-class functions to create closures, you can
 dynamically create functions.
 
-If you find using closures confusing so far, you’re in luck! Thanks to partial application
-parial function
+If closures are confusing then use partial functions
 ```haskell
 add4 a b c d = a + b + c +d
 partiFunc = add4 5
@@ -180,5 +179,93 @@ Haskell is a statically typed programming language. Haskell make use of type inf
 -> It’s Haskell’s type system that sets it apart from other programming languages.  
 
                                       Variable name :: Variable type
-                    Type signature:      `something :: Int`
-                    Variable definition: `something = 20`
+                    Type signature:      something :: Int
+                    Variable definition: something = 20
+
+Types start with a capital letter to distinguish them from functions (lowercase letter or \_).
+
+Int is bounded while Integer is not.
+
+A list of character is a string. String as a type synonym for [Char].
+
+A more useful type is Tuple which is different then list. Something to note is that a tuple of char is just one character and can't be a string.
+
+`->` is used to separate arguments and return values when defining a function type.
+
+The read function works by taking a string and converting it to another type.
+`x = read "8"` to what type we can assign x ??
+
+we can do this: `x= read "8" :: Int`
+
+Always the last type if a function is the type if the return value.
+
+      type of arg1 -> type of arg2 - > type of return value
+      funct :: Int -> String -> String -> (Int, String)
+
+Types for first-class functions: Put the function type signature in parenthesis.
+
+        ```haskell
+        ifEven :: (Int -> Int) -> Int -> Int
+        ifEven f n = if even n
+          then f n
+          else n
+        ```
+
+Use type variables to make sure a function can apply to all Types instead of creating a func for each type. Using type variabels to implement simple as =follow:
+```haskell
+simple :: a -> a
+simple x = x
+```
+
+We use different letter to indicate that we might use different types.
+
+func1 :: a -> a
+func2 :: a -> b
+
+-> this means that func1 will produce a result with a type similar to the input whereas func2 can produce a wider range of output types
+
+## Type synonym
+
+It is a good practice to use type synonym to rename the existing types when used in a given function to mak ethe code easier to understand:
+
+                        density :: Double -> Double -> Double
+
+This is an OK type signature, but this swill obviously be better:
+
+                        density :: Mass -> Volume -> Density
+
+To create a type synonym use `type`
+
+```haskell
+type Mass = Double
+type Volume = Double
+```
+
+We can use type synonym as follow 2: ```type PersonName = (String,String)```
+
+## Creating new types
+
+Sometime it is better to create a new type instead of trying to force a type to our use case.
+
+`data Sex = Male | Female`: sex type is an either instance of these data constructors. This is so similar to `data Bool = True | False`
+
+To create a type for blood type we need to take care of the ABO and the (positive/negative) thing
+Creating something loke data BloodType = A+|A-|O+|O- ... is retarted
+It would be better to use a data type for positive/negative and another for A/B/O things then combine them.
+
+```haskell
+data ABOType = A | B | AB | O
+data RhType = Pos | Neg
+data BloodType = BloodType ABOType RhType`
+```
+-> Second BloodType is the data constructor:  A `data constructor` is used to create a concrete instance of the type.
+
+-> Now we cna create person's blood type:
+```haskell
+person1 :: BloodType
+person1 = BloodType O Neg
+person2 :: BloodType
+person2 = BloodType AB Pos
+person3 :: BloodType
+person3 = BloodType O Pos
+```
