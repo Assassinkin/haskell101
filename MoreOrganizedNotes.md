@@ -245,6 +245,8 @@ We can use type synonym as follow 2: ```type PersonName = (String,String)```
 
 ## Creating new types
 
+To create new types use `data`.
+
 Sometime it is better to create a new type instead of trying to force a type to our use case.
 
 `data Sex = Male | Female`: sex type is an either instance of these data constructors. This is so similar to `data Bool = True | False`
@@ -269,3 +271,76 @@ person2 = BloodType AB Pos
 person3 :: BloodType
 person3 = BloodType O Pos
 ```
+
+When representing a data type sometimes it get tedious with large representation.
+representing a person for example can be done via:
+`data Person = Person Name Sex Int Int Int BloodType`. This can be ambiguous sometimes to understand which way Haskell provides `record syntax`
+```Haskell
+data Person = Person { name :: Name
+ , sex :: Sex
+ , age :: Int
+ , height :: Int
+ , weight :: Int
+ , bloodType :: BloodType }
+```
+With `record syntax` we can easily define data for our type and we can set each field by name, the order matter no more.
+```Haskell
+dovahKin :: Person
+dovahKin = Person {name = Name "Dovah" "Kin"
+, age = 20
+, sex = Male
+, height = 180
+, weight = 70
+, bloodType = BloodType O Pos }
+```
+Furthermore `record syntax` provides an easy way to access each field (no need for getters)
+```Haskell
+GHCi> height dovahKin
+62
+```
+
+Changing value can be done as follow (we need to assign that to a new person as we are pure here)
+
+                    dovahAssassin = dovahKin { age = 22 }
+
+## Type classes
+
+Type classes allow you to group types based on shared behavior.
+
+`Num` is a type class generalizing the idea of a number. All things of class `Num` must have a function `(+)` and `(-)` defined on them.
+
+We can use `:info` to get all the functions in a type class.
+```Haskell
+GHCi> :info Num
+class Num a where
+ (+) :: a -> a -> a
+ (-) :: a -> a -> a
+ (*) :: a -> a -> a
+ negate :: a -> a
+ abs :: a -> a
+ signum :: a -> a
+```
+- `:info` shows the definition of the type class.
+
+The definition is a list of functions that all members of the class must implement, along with the type signatures of those functions. The family of functions that describe a number is +, -, \*, negate, abs, and signum. Each type signature shows the same type variable `a` for all arguments and the output. None of these functions can return a different type than it takes as an argument.
+
+
+### Defining a type class:
+
+We need to name the type class (typeName) and define the signature of each of the functions affiliated to the type class.
+
+                        ```Haskell
+                        class TypeName a where
+                          fun1 :: a -> a
+                          fun2 :: a -> String
+                          fun3 :: a -> a -> Bool
+                        ```
+### Common type classes
+
+*Ord*
+for the greater oepration: `>`:
+```Haskell
+GHCi> :t (>)
+(>) :: Ord a => a -> a -> Bool
+```
+getting the type of the func > reveals that it is part of the `Ord` type class. `Ord` provide functions that compare all possible types (strings Int Double ...)
