@@ -309,7 +309,8 @@ Type classes allow you to group types based on shared behavior.
 
 `Num` is a type class generalizing the idea of a number. All things of class `Num` must have a function `(+)` and `(-)` defined on them.
 
-We can use `:info` to get all the functions in a type class.
+We can use `:info` to get all the functions in a type class. `:info` is also helpful in learning about types. It allows to get a list of all the type classes that a type is a member of.
+
 ```Haskell
 GHCi> :info Num
 class Num a where
@@ -320,6 +321,21 @@ class Num a where
  abs :: a -> a
  signum :: a -> a
 ```
+
+```Haskell
+GHCi> :info Int
+data Int = GHC.Types.I# GHC.Prim.Int# -- Defined in 'GHC.Types'
+instance Bounded Int -- Defined in 'GHC.Enum'
+instance Enum Int -- Defined in 'GHC.Enum'
+instance Eq Int -- Defined in 'GHC.Classes'
+instance Integral Int -- Defined in 'GHC.Real'
+instance Num Int -- Defined in 'GHC.Num'
+instance Ord Int -- Defined in 'GHC.Classes'
+instance Read Int -- Defined in 'GHC.Read'
+instance Real Int -- Defined in 'GHC.Real'
+instance Show Int -- Defined in 'GHC.Show'
+```
+
 - `:info` shows the definition of the type class.
 
 The definition is a list of functions that all members of the class must implement, along with the type signatures of those functions. The family of functions that describe a number is +, -, \*, negate, abs, and signum. Each type signature shows the same type variable `a` for all arguments and the output. None of these functions can return a different type than it takes as an argument.
@@ -344,3 +360,62 @@ GHCi> :t (>)
 (>) :: Ord a => a -> a -> Bool
 ```
 getting the type of the func > reveals that it is part of the `Ord` type class. `Ord` provide functions that compare all possible types (strings Int Double ...)
+
+*Bounded*:
+
+Basically it tells if a type is bounded or not like Int and Integer. Something different about the bounded class is that it requires values not functions.
+
+```Haskell
+Prelude> :info Bounded
+class Bounded a where
+  minBound :: a
+  maxBound :: a
+```
+
+*Show and Read*
+
+They allow showing and reading values of types.
+
+```Haskell
+class Show a where
+ show :: a -> String
+```
+
+Note that every thing that GHCI can print is a member of the Show type class.
+
+### Derive type classes
+
+```haskell
+data Status = Passed | Failed deriving (Show)
+```
+
+-> Here we tell Haskell to derive the Show type class for our new data type.
+
+### Modify Type classes from default behaviors to the one we want
+
+Consider this data type:
+```haskell
+data Akatsuki = HD | ZT | IU | SS | NP deriving (Eq, Ord)
+```
+We created a data type with the names of some Akatsuki members We used only 2 Letters t=o keep the definition brief.
+
+-> Deriving Show will only show 2 letters which is not very readable.
+
+-> We need to implement our own Show type class for iour data. To implement that we need to create a `show` functions or the show `method` to be in sync with type class terminologies.
+
+==>  Creating an instance of Show:
+```Haskell
+instance Show Akatsuki where
+  show NP = "Nagato Pain"
+  show ZT = "Zetsu"
+  show IU = "Itachi uchiha"
+  show HD = "Hidan"
+  show SS = "Sasori of the red sand"
+```
+
+ Polymorphism in Haskell means that the same function behaves differently depending on the type of data it’s working with.
+
+ We can also derive Ord to order our Akatsuki memebers by importance (for me at least). The default behavior when deriving Ord is to use the order that the data constructors are defined.
+that means that NP > ZT is true
+
+`newtype` is something in between type (synonym) and `data type`
