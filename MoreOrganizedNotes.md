@@ -224,6 +224,13 @@ func2 :: a -> b
 
 -> this means that func1 will produce a result with a type similar to the input whereas func2 can produce a wider range of output types
 
+## Some definitions:
+
+`Algebraic data types` are any types that can be made by combining other types.
+
+* `product types` :Types made by combining other types with an `and`.
+* `sum types`: Types combined using `or`
+
 ## Type synonym
 
 It is a good practice to use type synonym to rename the existing types when used in a given function to mak ethe code easier to understand:
@@ -419,3 +426,12 @@ instance Show Akatsuki where
 that means that NP > ZT is true
 
 `newtype` is something in between type (synonym) and `data type`
+
+
+# Types types:
+
+All common languages mostly only use `And` to create new types/class/objects
+
+The most straightforward `sum type` is `Bool`. The `sum type` in Haskell allow for many powerful types that other languages do not provide.
+
+Sum types are much less common than product types. The problem with product types alone is that you’re forced to think in hierarchical abstractions. Sum types are a powerful tool that allows you to be much more expressive in defining new types.
