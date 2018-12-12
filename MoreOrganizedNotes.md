@@ -495,3 +495,61 @@ Monoid laws:
 * mappend x mempty = x
 * mappend x (mappend y z) = mappend (mappend x y) z. (associativity)
 * mconcat = foldr mappend mempty
+
+
+### Types parameters
+
+Types take arguments by using type variables in their definitions . their arguments are other types. These types are called `parameterized types`. Parameterized types allow you defining generic data structures that work with a wide range of existing data.
+
+The most basic parameterized type you could make is a Box that serves as a container for any other type: `data Box a = Box a deriving Show` .
+
+`wrap` and `unwrap` are simple functions for the Box type (putting and getting item into/from the box).
+
+#### Triple:
+
+```Haskell
+data Triple a = Triple a a a deriving Show
+```
+
+we can make use of `Tripe` when representing the 3 sizes of the body:
+```Haskell
+type body3Mesure = Triple Int
+psyMesure :: body3Mesure
+psyMesure = Triple 100 88 99
+```
+
+We can create functions to access the 3 values of the triple type as well as turning into a list:
+
+```Haskell
+toList :: Triple a -> [a]
+toList (Triple a b c) = [a,b,c]
+```
+
+#### Types with more than a paramater
+
+List definition:
+```Haskell
+data [] a = [] | a:[a]
+```
+--> A list of type a is either `Empty` or the consing of the value `a` with another list of type `a`.
+
+Tuple Def:
+Tuples use a built-in type constructor, ().
+
+```Haskell
+data (,) a b = (,) a b
+```
+
+#### Types of types: Kind
+
+The kind of a type indicates the number of parameters the type takes, which are expressed using an asterisk (\*). Types that take no parameters have a kind of `*`, types that take one parameter have the kind `* -> *`, types with two parameters have the kind `* -> * -> *`, and so forth.
+
+#### Data.Map
+
+Importing Data.Map can cuase issues as some name conflict with other names in haskell default library. Thus, we need a qualified import: `import qualified Data.Map as Map`.
+
+The qualified statement give the module we importing a name so it doesn’t conflict with existing functions.
+
+`Map` is the nickname to use to preface all types and functions from the Data.Map module.
+
+`Map` is called a dictionary in other functions.
