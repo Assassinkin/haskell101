@@ -435,3 +435,63 @@ All common languages mostly only use `And` to create new types/class/objects
 The most straightforward `sum type` is `Bool`. The `sum type` in Haskell allow for many powerful types that other languages do not provide.
 
 Sum types are much less common than product types. The problem with product types alone is that you’re forced to think in hierarchical abstractions. Sum types are a powerful tool that allows you to be much more expressive in defining new types.
+
+### Composition
+
+`combining functions`: A special higher-order function that’s just a period (called compose) takes two functions as arguments.
+
+### Guards:
+
+guards: similar to pattern matching, but they allow some computation on the arguments that is going to be compared.
+
+```haskell
+yourSalary :: Int -> String
+yourSalary s | s > 5000 = "Your rich"
+             | s > 1000 = "Mehh your good"
+             | otherwise = "your in deep shit"
+```
+
+### Semigroups
+
+The Semigroup class has one important method, the `<>` operator. We can think of `<>` as an operator for combining instances of the same type. You can trivially implement `Semigroup` for Integer by defining `<>` as `+`.
+
+Type of <> is `(<>) :: Semigroup a => a -> a -> a`
+
+--> This simple signature is the heart of the idea of composability; we take two similar things and combine them to get a new thing of the same type.
+
+```haskell
+instance Semigroup Integer where
+ (<>) x y = x + y
+ ```
+
+here we difine <> as the + operator
+
+### Monoids: Composing with identity
+
+Semigroup and Monoid are similar. the only major difference is that the latter require and identity element. Identity means that ` x <> id = x ` and `id <> x = x`.
+
+Monoid would be a subclass of semiGroup but it is not the case as monoid cmae before semiGroup.
+
+Monoid typeclass def:
+
+```Haskell
+class Monoid a where
+ mempty :: a
+ mappend :: a -> a -> a
+ mconcat :: [a] -> a
+```
+
+`mappend` is similar to `<>`
+
+The `mconcat` method takes a list of Monoids combine and return a single Monoid.
+
+```Haskell
+GHCi> mconcat [[1],[200],[633],[5555]]
+[1, 200, 633, 5555]
+```
+
+Monoid laws:
+* mappend mempty x = x
+* mappend x mempty = x
+* mappend x (mappend y z) = mappend (mappend x y) z. (associativity)
+* mconcat = foldr mappend mempty
