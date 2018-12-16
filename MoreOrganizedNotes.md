@@ -553,3 +553,11 @@ The qualified statement give the module we importing a name so it doesn’t conf
 `Map` is the nickname to use to preface all types and functions from the Data.Map module.
 
 `Map` is called a dictionary in other functions.
+
+# The `Maybe` type
+
+ Maybe is an important parameterized type. Maybe represents a context for a value unlike map that represents a container for values. Maybe types represent values that might be missing.
+
+Maybe Definition: `data Maybe a = Nothing | Just a`.
+
+Maybe is used as a solution to missing values.
