@@ -428,7 +428,7 @@ that means that NP > ZT is true
 `newtype` is something in between type (synonym) and `data type`
 
 
-# Types types:
+# Types (advanced)
 
 All common languages mostly only use `And` to create new types/class/objects
 
@@ -561,3 +561,46 @@ The qualified statement give the module we importing a name so it doesn’t conf
 Maybe Definition: `data Maybe a = Nothing | Just a`.
 
 Maybe is used as a solution to missing values.
+
+# IO
+
+To handle interacting with the world Haskell provides an `IO` type.
+
+`IO` is a special parameterized type. Any value in an IO context must stay in this context. This prevents code that’s pure and code that’s necessarily impure from mixing.
+
+`putStrLn "Dovah Kin, the name is GREED"`: this is used to print stuff as output in interactive shells, similar to python `print` and shell `echo` functions.
+
+`dovahName <- getLine` Getting the input from user.
+
+Functions getting input from IO are tainted with impurity shame and get `IO a` as their return types
+
+Haskell make it impossible for functions tainted with IO to be used with other pure functions.
+
+--> how Haskell will allow us to create code that interact with real world
+
+`main :: IO ()`: `()` is a tuple of zero elements.
+
+For `Maybe`, being parameterized with () is useless. It can have only two values, `Just ()` and `Nothing`. But arguably, `Just ()` is `Nothing`. It turns out that representing nothing is exactly why you want to parameterize IO with an empty tuple.
+
+-> `putStrLn name`: thi sprint something as an output but it do not return anything. So, it returns nothing. We need a type to associate our main func with but the main func do not return anything. we use the () tuple to parameterize your IO type. Because () is nothing
+
+main break all Haskell functions rule (get at least a variable, return something , ...)
+
+main is called `IO action`:
+
+Some IO actions return no value, some take no input, and others don’t always return the same value given the same input.
+
+so since `putStrLn :: String -> IO ()` it is then also an IO action
+
+We usually use a do statement and a `main`
+```Haskell
+main = IO ()
+main = do
+  blabla
+```
+
+`do-notation` allows us to treat IO types as if they were regular types. This also explains why some variables use `let` and others use `<-`.
+* Variables assigned with `<-` allow you to act as though a type `IO a` is just of type a.
+* `let` statements allows the creation of variables that aren’t IO types.
+
+So to be able to use IO variables with pure functions we need to assign them using `<-`.
