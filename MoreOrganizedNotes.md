@@ -604,3 +604,89 @@ main = do
 * `let` statements allows the creation of variables that aren’t IO types.
 
 So to be able to use IO variables with pure functions we need to assign them using `<-`.
+
+## working with IO
+
+To get arguments from CLI, we use `getArgs` function:
+`getArgs :: IO [String]`
+
+Example program:
+
+```Haskell
+import System.Environment
+main :: IO ()
+main = do
+ args <- getArgs
+```
+
+Use `mapM` to map around a list of IO values
+
+using mapM cause the program to fail due to this issue: `Couldn't match type '[()]' with '()'`.
+This is cause mapM return a list while the main expect ().
+
+to fix this we need to mapM_. mapM_ works just like mapM but throws away the results.
+
+Typically, when a function ends with an
+underscore in Haskell, it indicates that you’re throwing away the results.
+
+-> working example is as follow:
+```Haskell
+main :: IO ()
+main = do
+ args <- getArgs
+ mapM_ putStrLn args
+```
+
+* `mapM` Takes an IO action and a regular list, performing the action on each item in the list, and returning a list in the IO context
+* `mapM_` Same as mapM, but it throws away the values (note the underscore)
+* `replicateM` Takes an IO action, an Int n, and then repeats the IO action n times, returning the results in an IO list
+* `replicateM_` Same as replicateM, but it throws away the results
+
+## Lazy IO:
+
+* The `getContents` action reads input until it gets an end-of-file signal.
+*  The `lines` function allows you to split a string by lines:
+  ```Haskell
+  GHCi> lines ["1", "1", "\n", "5", "2", "\n"]
+  ["11","52"]
+  ```
+* `Data.List.Split`:  splits a `String` based on another `String`.
+
+To get the sum of a user int input till he press control D or exit, we can use those functions as follow:
+```Haskell
+main :: IO ()
+main = do
+ userInput <- getContents
+ let numbers = toInts userInput
+ print (sum numbers)
+```
+
+print is (putStrLn . show)
+
+
+## Text and IO
+
+Implementing Strings as a linked list of characters is expensive in terms of time and space. use `text` instead.
+
+Text is implemented as an array under the hood. `text` do not use lazy evaluation.for that use `Data.Text.Lazy`.
+
+```Haskell
+T.pack :: String -> T.Text
+T.unpack :: T.Text -> String*
+```
+These 2 functions are used to transfer text to string and vice-versa.
+
+when getting text from a string like text = "blabla" we get an error due to "blabla" being a string so we need to use language extension. The one for this is called `OverloadedStrings`.
+
+Use it with ghc like this : `ghc blabla.hs -XOverloadedStrings`. Or make sure to add it to the beginning of the program like this : `{-# LANGUAGE <Extension Name> #-}` ( this is called language pragma).
+
+Most useful function for string has their equivalent for `text` in ` Data.Text`.
+
+Functions that work for both string and text:
+- `words`:  same as lines, but it works for any whitespace characters, rather than just new lines.
+- `splitOn`: splits up text by any substring of text.
+- `unwords`/`unlines`
+- `Intercalate`: opposite of splitOn.
+- `++` is nopt available for text so use semigroup or monoid (`mconcat`).
+
+`qualified Data.Text.IO` This is used to import IO functions for Text. (putSrLn)
