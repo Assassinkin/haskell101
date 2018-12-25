@@ -670,6 +670,8 @@ Implementing Strings as a linked list of characters is expensive in terms of tim
 
 Text is implemented as an array under the hood. `text` do not use lazy evaluation.for that use `Data.Text.Lazy`.
 
+`Data.Text` is a strict data type (it doesn’t use lazy evaluation)
+
 ```Haskell
 T.pack :: String -> T.Text
 T.unpack :: T.Text -> String*
@@ -690,3 +692,33 @@ Functions that work for both string and text:
 - `++` is nopt available for text so use semigroup or monoid (`mconcat`).
 
 `qualified Data.Text.IO` This is used to import IO functions for Text. (putSrLn)
+
+## IO and files
+
+`import System.IO` this module allows reading and writing 2 files.
+
+- to open a file use: `openFile` function:
+
+The function type is follow:
+```Haskell
+openFile :: FilePath -> IOMode -> IO Handle
+type FilePath = String
+data IOMode = ReadMode | WriteMode | AppendMode | ReadWriteMode
+```
+
+`IO Handle`:  The Handle type is a file handle that allows passing around a reference to a file.
+
+- to close the file use: `hClose`.
+
+ To read and write to the file use: `hPutStrLn` and `hGetLine`. thse 2 func require a handle. `putStrLn` and `GetLine` are specific case of hPutStrLn and hGetLine with the handle being the `stdout` and `stdin`.
+
+ To check for end of file use this function: `hIsEOF`.
+
+ It is better to use these already created functions when dealing with files:
+ ```Haskell
+readFile :: FilePath -> IO String
+writeFile :: FilePath -> String -> IO ()
+appendFile :: FilePath -> String -> IO ()
+```
+
+When working with files it is better to use strict IO to avoid issues when opening and closing the file. So it is better to always use strict data type when working with that (Text as an example)
