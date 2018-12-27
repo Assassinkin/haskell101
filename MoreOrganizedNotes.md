@@ -722,3 +722,16 @@ appendFile :: FilePath -> String -> IO ()
 ```
 
 When working with files it is better to use strict IO to avoid issues when opening and closing the file. So it is better to always use strict data type when working with that (Text as an example)
+
+
+### IO and binary files
+
+`ByteString` is a type that will allows treating raw binary data as it were regular string. It is part of the Data library: `import qualified Data.ByteString as B`.
+
+for safely converting Unicode text to raw bytes and vice-versa.
+
+```Haskell
+import qualified Data.Text.Encoding as E
+E.encodeUtf8 :: T.Text -> BC.ByteString
+E.decodeUtf8 :: BC.ByteString -> T.Text
+```
