@@ -50,3 +50,23 @@ In the test file: `$` in `main = hspec $ do` is a syntaxic sugar that replaces (
 Hoogle is a usefull haskell api search engine.
 
 If we need a function that have a specific type def we can search for it via [hoogle](https://www.haskell.org/hoogle/) .We need just to type `[String] -> String`.
+
+
+When writing a module make sure to export only the functions needed by other programs, no need to export helper functions.
+
+We can also selectively import functions:
+```Haskell
+import Data.Char (toLower,isSpace,isPunctuation)
+```
+
+When importing we use qualified imports as follow:
+```Haskell
+ import qualified Data.Text as T
+ ```
+
+ Or we can drop the `as` part and use the module name directly.
+```Haskell
+import qualified Blabla
+```
+
+Getting rid of language pragmas: Add this in the .cabal file after the `default-language` entry:  `extensions: OverloadedStrings`
