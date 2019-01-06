@@ -554,7 +554,7 @@ The qualified statement give the module we importing a name so it doesn’t conf
 
 `Map` is called a dictionary in other functions.
 
-# The `Maybe` type
+## The `Maybe` type
 
  Maybe is an important parameterized type. Maybe represents a context for a value unlike map that represents a container for values. Maybe types represent values that might be missing.
 
@@ -724,7 +724,7 @@ appendFile :: FilePath -> String -> IO ()
 When working with files it is better to use strict IO to avoid issues when opening and closing the file. So it is better to always use strict data type when working with that (Text as an example)
 
 
-### IO and binary files
+## IO and binary files
 
 `ByteString` is a type that will allows treating raw binary data as it were regular string. It is part of the Data library: `import qualified Data.ByteString as B`.
 
@@ -734,4 +734,62 @@ for safely converting Unicode text to raw bytes and vice-versa.
 import qualified Data.Text.Encoding as E
 E.encodeUtf8 :: T.Text -> BC.ByteString
 E.decodeUtf8 :: BC.ByteString -> T.Text
+```
+
+# Errors and Either
+
+We can throw errors in Haskell using the `error` function: `error "throw this error message"`.
+
+Let's keep in mind that throwing errors in Haskell is bad practice cause types should've took care of preventing errors.
+
+A function that can cause issues is `/` but Haskell took care of that :
+```Haskell
+GHCi> 2 / 0
+Infinity
+```
+
+## Either
+
+Maybe is a strong type but with huge project nothing can become very confusing.
+
+```Haskell
+data Either a b = Left a | Right b
+```
+Left is for handling errors and Right for "right" things. `Right` works exactly like `Just`, while `Left` allows to pass more information than `Nothing`.
+
+-> The Either type combines the safety of Maybe with the clarity that error messages provide.
+
+Example of using Either:
+```Haskell
+isItPrime :: Int -> Either String Bool
+isItPrime n
+ | n < 2 = Left "0 and 1 are not considered prime/not prime"
+ | n > maxN = Left "Value larger than maxN"
+ | otherwise = Right (n `elem` primes)
+```
+The equivalent with `maybe` is:
+```Haskell
+isItPrime :: Int -> Maybe Bool
+isItPrime n
+ | n < 2 = Nothing
+ | n > maxN = Nothing
+ | otherwise = Just (n `elem` primes)
+```
+Instead of using string for all of our Left Values we can create dedicated types for that.
+```Haskell
+data myError = TooLarge | LessThan2
+```
+(note: Make sure to make the new data type an instance of `show` )
+```Haskell
+instance Show myError where
+ show TooLarge = "Value larger than maxN"
+ show LessThan2 = "0 and 1 are not considered prime/not prime"
+```
+-> the fuucntion can be written as follow now:
+```Haskell
+isItPrime :: Int -> myError Bool
+isItPrime n
+ | n < 2 = LessThan2
+ | n > maxN = TooLarge
+ | otherwise = Just (n `elem` primes)
 ```

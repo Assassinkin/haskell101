@@ -70,3 +70,7 @@ import qualified Blabla
 ```
 
 Getting rid of language pragmas: Add this in the .cabal file after the `default-language` entry:  `extensions: OverloadedStrings`
+
+To set a compiler flag to warn of any potential problems with the code, add `-Wall` flag. For stack add the flag to the `ghc-options` in the executable section of the `.cabal` file.
+
+To not miss warnings on projects, compile with `-error`, which causes an error anytime a warning is found.
