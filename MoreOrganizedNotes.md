@@ -748,8 +748,6 @@ GHCi> 2 / 0
 Infinity
 ```
 
-## Either
-
 Maybe is a strong type but with huge project nothing can become very confusing.
 
 ```Haskell
